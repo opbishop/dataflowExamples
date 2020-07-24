@@ -1,0 +1,30 @@
+buildscript {
+    ext {
+        beamVersion = '2.22.0'
+    }
+}
+
+plugins {
+    id 'java'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'org.apache.beam', name: 'beam-sdks-java-core', version: "${beamVersion}"
+    runtimeOnly group: 'org.apache.beam', name: 'beam-runners-direct-java', version: "${beamVersion}"
+}
+
+task execute (type:JavaExec) {
+    main = "com.obishop.pipelines.NetflixPipeline"
+    classpath = sourceSets.main.runtimeClasspath
+    systemProperties System.getProperties()
+//    args System.getProperty("exec.args").split()
+}
